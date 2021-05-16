@@ -3,17 +3,25 @@ from BlockClass import Block
 
 class Blockchain():
     def __init__(self):
-        self.chain = [self.createGenesisBlock()]
         self.difficulty = 5
+        self.chain = []
+
+        genesisBlock = Block(data={'GENESIS_BLOCK'})
+        self.addBlock(genesisBlock)
 
     def createGenesisBlock(self):
-        return Block(data={'GENESIS_BLOCK'})
+        genesisBlock = Block(data={'GENESIS_BLOCK'})
+        self.addBlock(genesisBlock)
 
     def getLatestBlock(self):
         return self.chain[-1]
 
     def addBlock(self, newBlock):
-        newBlock.previousHash = self.getLatestBlock().hash
+        try:
+            newBlock.previousHash = self.getLatestBlock().hash
+        except IndexError:
+            newBlock.previousHash = '0' * 64
+
         newBlock.mineBlock(self.difficulty)
         self.chain.append(newBlock)
 
@@ -23,7 +31,6 @@ class Blockchain():
             previousBlock = self.chain[i-1]
 
             if currentBlock.previousHash != previousBlock.hash:
-                print('Second test did not pass')
                 return False
 
             else:
