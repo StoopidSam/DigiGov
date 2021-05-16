@@ -4,7 +4,7 @@ from BlockClass import Block
 class Blockchain():
     def __init__(self):
         self.chain = [self.createGenesisBlock()]
-        self.difficulty = 3
+        self.difficulty = 5
 
     def createGenesisBlock(self):
         return Block(data={'GENESIS_BLOCK'})
@@ -22,10 +22,8 @@ class Blockchain():
             currentBlock = self.chain[i]
             previousBlock = self.chain[i-1]
 
-            if currentBlock.hash != currentBlock.calculateHash():
-                return False
-
             if currentBlock.previousHash != previousBlock.hash:
+                print('Second test did not pass')
                 return False
 
             else:

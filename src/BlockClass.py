@@ -7,22 +7,26 @@ class Block():
         self.timestamp = str(time.time())
         self.data = data
         self.previousHash = '0'*64
-        self.hash = self.calculateHash()
         self.nonce = 0
+        self.hash = self.calculateHash()
 
-        self.dict = {
+    def getBlockDict(self):
+        return {
             "Previous hash": self.previousHash,
             "Hash": self.hash,
             "Timestamp": self.timestamp,
-            "Data": self.data
+            "Data": self.data,
+            "Nonce": self.nonce
         }
 
     def mineBlock(self, difficulty):
-        while self.hash[:difficulty] != '0'*difficulty:
-            self.nonce += 1
-            self.calculateHash()
-
-        print('Block mined: ' + self.hash)
+        while True:
+            if self.hash[:difficulty] != '0' * difficulty:
+                self.nonce += 1
+                self.hash = self.calculateHash()
+            else:
+                print(f'\nBlock mined: {self.getBlockDict()}')
+                break
 
     def calculateHash(self):
         hashingText = f'{self.timestamp}{self.data}{self.previousHash}{self.nonce}'.encode(
