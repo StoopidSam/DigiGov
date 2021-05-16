@@ -1,6 +1,5 @@
 import time
 from hashlib import sha256
-from pprint import pprint
 
 
 class Block():
