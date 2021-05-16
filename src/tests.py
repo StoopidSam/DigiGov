@@ -1,14 +1,13 @@
 from BlockchainClass import Blockchain
 from BlockClass import Block
-import json
+from TransactionClass import Transaction
 
+
+print('\nStarting miner...')
 blockchain = Blockchain()
-blockchain.addBlock(Block(data='Sam votes for Jeff'))
-blockchain.addBlock(Block(data='Eliza votes for Bob'))
-blockchain.addBlock(Block(data='Jake votes for Bob'))
-blockchain.addBlock(Block(data='Hanna votes for Jeff'))
-
-if blockchain.isChainValid:
-    print('\nBlockchain is valid!')
-else:
-    print('Blockchain is not valid.')
+print('\nCreating some new transactions...')
+blockchain.createTransaction(Transaction('sam', 'eliza', 10))
+blockchain.createTransaction(Transaction('sam', 'bill', 10))
+print('\nMining the new transactions...')
+blockchain.minePendingTransactions('sam')
+print(f'Sam\'s balance: ' + str(blockchain.getBalance('sam')))

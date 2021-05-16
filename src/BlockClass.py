@@ -1,5 +1,6 @@
 import time
 from hashlib import sha256
+from pprint import pprint
 
 
 class Block():
@@ -25,7 +26,7 @@ class Block():
                 self.nonce += 1
                 self.hash = self.calculateHash()
             else:
-                print(f'\nBlock mined: {self.getBlockDict()}')
+                print(f'Block mined: {self.hash}')
                 break
 
     def calculateHash(self):
